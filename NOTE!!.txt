@@ -1,0 +1,20 @@
+BUAT CRUD OBAT =
+
+	HALAMAN GET (Index)
+	HALAMAN POST
+		-Nama
+	EDIT
+	+ STOCK & TANGGAL STOCK
+	+ HARGA & TANGGAL HARGA DI UBAH
+	DESTROY!
+	IMPORT & EXPORT EXCEL
+	TABLE (Nama,Harga,Stock) ALL DONE except export
+APOTEK =
+	
+ 	MODAL SHOW DONE
+	+ HARGA DI MODAL SHOW
+
+RACIKANS = COMBOBOX (isinya harus dari crud obat) DONE
+
+Design login and register
+User Dashboard + Admin Dashboard

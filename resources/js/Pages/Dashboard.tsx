@@ -1,26 +1,28 @@
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head } from '@inertiajs/react';
+import React from 'react';
+import Navigation from './DashboardComponents/Navigation';
+import HeroSection from './DashboardComponents/HeroSection';
+import AboutSection from './DashboardComponents/AboutSection';
+import ServicesSection from './DashboardComponents/ServicesSection';
+import DoctorsSection from './DashboardComponents/DoctorsSection';
+import FacilitiesSection from './DashboardComponents/FacilitiesSection';
+import TestimonialsSection from './DashboardComponents/TestimonialsSection';
+import ContactSection from './DashboardComponents/ContactSection';
+import Footer from './DashboardComponents/FooterSection';
 
-export default function Dashboard() {
-    return (
-        <AuthenticatedLayout
-            header={
-                <h2 className="text-xl font-semibold leading-tight text-gray-800">
-                    Dashboard
-                </h2>
-            }
-        >
-            <Head title="Dashboard" />
+const Dashboard = () => {
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
+      <Navigation />
+      <HeroSection />
+      <AboutSection />
+      <ServicesSection />
+      <DoctorsSection />
+      <FacilitiesSection />
+      <TestimonialsSection />
+      <ContactSection />
+      <Footer />
+    </div>
+  );
+};
 
-            <div className="py-12">
-                <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
-                    <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
-                        <div className="p-6 text-gray-900">
-                            You're logged in!
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </AuthenticatedLayout>
-    );
-}
+export default Dashboard;
