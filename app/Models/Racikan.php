@@ -33,4 +33,13 @@ class Racikan extends Model
     {
         return $this->belongsTo(Obat::class, 'obat_id');
     }
+
+    // app/Models/Racikan.php
+    public function getTotalHargaAttribute()
+    {
+        if ($this->obat && $this->obat->latestHarga) {
+            return $this->qty * $this->obat->latestHarga->harga_baru;
+        }
+        return 0;
+    }
 }

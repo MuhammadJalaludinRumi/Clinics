@@ -10,10 +10,16 @@ class ApotekController extends Controller
 {
     public function index()
     {
-        $racikans = Racikan::with('obat')->latest()->get();
+        // eager-load harga terbaru lewat relasi obat.latestHarga
+        $racikans = Racikan::with('obat.latestHarga')->latest()->get();
+
+        // pastikan setiap model menyertakan accessor 'total_harga'
+        $racikans->each(function ($r) {
+            $r->append('total_harga');
+        });
 
         return Inertia::render('Admin/Apotek/Index', [
-            'racikans' => $racikans
+            'racikans' => $racikans,
         ]);
     }
 }

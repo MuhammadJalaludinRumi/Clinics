@@ -41,7 +41,7 @@ class TriageController extends Controller
         Triage::create($data);
 
         return redirect()
-            ->route('admin.cppt.index')
+            ->route('admin.triage.index')
             ->with('success', 'Data triage berhasil disimpan.');
     }
 

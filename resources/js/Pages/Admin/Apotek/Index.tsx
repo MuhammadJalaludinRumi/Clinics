@@ -270,7 +270,7 @@ const ApotekIndex: React.FC<Props> = ({ racikans = [] }) => {
                     </div>
                     <div>
                         <div className="font-medium text-gray-900">
-                            {racikan.obat?.nama_obat || 'Nama obat tidak tersedia'}
+                            {racikan.obat?.nama || 'Nama obat tidak tersedia'}
                         </div>
                         <div className="text-sm text-gray-500">No: {racikan.no}</div>
                     </div>
@@ -322,7 +322,7 @@ const ApotekIndex: React.FC<Props> = ({ racikans = [] }) => {
     const totalRacikans = racikans.length;
     const totalQty = racikans.reduce((sum, r) => sum + Number(r.qty || 0), 0);
     const uniquePatients = new Set(racikans.map(r => r.nama).filter(Boolean)).size;
-    const uniqueObat = new Set(racikans.map(r => r.obat?.nama_obat).filter(Boolean)).size;
+    const uniqueObat = new Set(racikans.map(r => r.obat?.nama).filter(Boolean)).size;
 
     return (
         <>
@@ -554,7 +554,7 @@ const ApotekIndex: React.FC<Props> = ({ racikans = [] }) => {
                                         <div className="grid grid-cols-2 gap-4">
                                             <div>
                                                 <p className="text-sm text-blue-600 font-medium">Nama Obat</p>
-                                                <p className="text-lg font-semibold text-blue-900">{selectedRacikan.obat?.nama_obat || 'Tidak tersedia'}</p>
+                                                <p className="text-lg font-semibold text-blue-900">{selectedRacikan.obat?.nama || 'Tidak tersedia'}</p>
                                             </div>
                                             <div>
                                                 <p className="text-sm text-blue-600 font-medium">Nomor</p>
@@ -605,6 +605,13 @@ const ApotekIndex: React.FC<Props> = ({ racikans = [] }) => {
                                             <div>
                                                 <p className="text-sm text-purple-600 font-medium">Jumlah</p>
                                                 <p className="text-lg font-semibold text-purple-900">{selectedRacikan.qty} {selectedRacikan.satuan}</p>
+                                            </div>
+
+                                            <div>
+                                                <p className="text-sm text-purple-600 font-medium">Total Harga</p>
+                                                <p className="text-lg font-bold text-purple-900">
+                                                    Rp {selectedRacikan.total_harga?.toLocaleString('id-ID') || 0}
+                                                </p>
                                             </div>
                                         </div>
                                     </div>

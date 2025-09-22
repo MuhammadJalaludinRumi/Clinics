@@ -18,19 +18,28 @@ class Obat extends Model
         return $this->hasMany(ObatHarga::class);
     }
 
-    // stok aktif = stok awal + semua tambahan
     public function getTotalQtyAttribute()
     {
         return $this->qty_awal + $this->stocks()->sum('jumlah');
     }
 
-    // harga aktif = harga terakhir, fallback ke harga_awal
-    public function getCurrentHargaAttribute()
+    public function latestHarga()
     {
-        return $this->hargas()->latest()->value('harga_baru') ?? $this->harga_awal;
+        return $this->hasOne(ObatHarga::class, 'obat_id')
+            ->latestOfMany();
     }
+
+    public function getHargaAttribute()
+    {
+        return $this->harga_baru;
+    }
+
     public function racikans()
     {
         return $this->hasMany(Racikan::class);
+    }
+    public function getCurrentHargaAttribute()
+    {
+        return optional($this->latestHarga)->harga_baru ?? 0;
     }
 }

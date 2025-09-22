@@ -74,7 +74,6 @@ export default function Create({ daftarRegistrasi }: Props) {
                         {/* Patient Information */}
                         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
                             <h2 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
-                                <span className="mr-2">👤</span>
                                 Informasi Pasien
                             </h2>
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -104,7 +103,6 @@ export default function Create({ daftarRegistrasi }: Props) {
                         {/* Medical Professional Information */}
                         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
                             <h2 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
-                                <span className="mr-2">👨‍⚕️</span>
                                 Informasi Tenaga Kesehatan
                             </h2>
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -144,7 +142,6 @@ export default function Create({ daftarRegistrasi }: Props) {
                         {/* SOAP Format */}
                         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
                             <h2 className="text-lg font-semibold text-gray-900 mb-6 flex items-center">
-                                <span className="mr-2">📝</span>
                                 Format SOAP
                             </h2>
                             <div className="space-y-6">
@@ -233,7 +230,6 @@ export default function Create({ daftarRegistrasi }: Props) {
                         {/* Integration Notes */}
                         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
                             <h2 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
-                                <span className="mr-2">🔗</span>
                                 Catatan Integrasi
                             </h2>
                             <div>

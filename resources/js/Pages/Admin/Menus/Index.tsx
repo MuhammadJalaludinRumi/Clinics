@@ -32,8 +32,6 @@ export default function MenuManagement() {
     const [showAddForm, setShowAddForm] = useState(false);
     const [searchTerm, setSearchTerm] = useState("");
     const [selectedRole, setSelectedRole] = useState<string>("");
-    const [editingMenuRoles, setEditingMenuRoles] = useState<Menu | null>(null);
-
     const form = useForm({
         title: '',
         url: '',
@@ -60,26 +58,6 @@ export default function MenuManagement() {
             onSuccess: () => {
                 form.reset();
                 setShowAddForm(false);
-                router.reload({ only: ['menus'] });
-            }
-        });
-    };
-
-    const handleEditRoles = (menu: Menu) => {
-        setEditingMenuRoles(menu);
-        roleForm.setData({
-            roles: menu.roles.map(r => r.id)
-        });
-    };
-
-    const handleRoleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        if (!editingMenuRoles) return;
-
-        roleForm.put(route('admin.menus.update', editingMenuRoles.id), {
-            onSuccess: () => {
-                setEditingMenuRoles(null);
-                roleForm.reset();
                 router.reload({ only: ['menus'] });
             }
         });
@@ -520,15 +498,6 @@ export default function MenuManagement() {
                                             Edit
                                         </Link>
                                         <button
-                                            onClick={() => handleEditRoles(menu)}
-                                            className="flex-1 inline-flex items-center justify-center px-3 py-2.5 border border-green-300 text-sm font-medium rounded-xl text-green-700 bg-green-50 hover:bg-green-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-all duration-200"
-                                        >
-                                            <svg className="mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z" />
-                                            </svg>
-                                            Role
-                                        </button>
-                                        <button
                                             onClick={() => handleDelete(menu.id)}
                                             className="flex-1 inline-flex items-center justify-center px-3 py-2.5 border border-red-300 text-sm font-medium rounded-xl text-red-700 bg-red-50 hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-all duration-200"
                                         >
@@ -566,97 +535,6 @@ export default function MenuManagement() {
                                         Add Your First Menu
                                     </button>
                                 )}
-                            </div>
-                        </div>
-                    )}
-
-                    {/* Edit Role Modal */}
-                    {editingMenuRoles && (
-                        <div className="fixed inset-0 z-50 overflow-y-auto">
-                            <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-                                <div className="fixed inset-0 bg-slate-900 bg-opacity-75 transition-opacity backdrop-blur-sm" onClick={() => setEditingMenuRoles(null)}></div>
-
-                                <div className="inline-block align-bottom bg-white rounded-2xl text-left overflow-hidden shadow-2xl transform transition-all sm:my-8 sm:align-middle sm:max-w-2xl sm:w-full border border-slate-200">
-                                    <form onSubmit={handleRoleSubmit}>
-                                        <div className="bg-white px-8 pt-8 pb-6">
-                                            <div className="flex items-center mb-6">
-                                                <div className="h-12 w-12 rounded-xl bg-gradient-to-br from-green-100 to-green-200 flex items-center justify-center mr-4 border border-green-300">
-                                                    <svg className="h-6 w-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z" />
-                                                    </svg>
-                                                </div>
-                                                <div>
-                                                    <h3 className="text-2xl font-bold text-slate-900">
-                                                        Edit Menu Roles
-                                                    </h3>
-                                                    <p className="text-slate-600 mt-1">
-                                                        {editingMenuRoles.title}
-                                                    </p>
-                                                </div>
-                                            </div>
-
-                                            <div className="space-y-6">
-                                                <div>
-                                                    <label className="block text-sm font-semibold text-slate-700 mb-3">
-                                                        Visible to Roles
-                                                    </label>
-                                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                                                        {roles.map((role) => (
-                                                            <label key={role.id} className="relative flex items-center p-3 bg-slate-50 rounded-xl border border-slate-200 hover:bg-slate-100 transition-colors duration-200 cursor-pointer">
-                                                                <input
-                                                                    type="checkbox"
-                                                                    value={role.id}
-                                                                    checked={roleForm.data.roles.includes(role.id)}
-                                                                    onChange={e => {
-                                                                        const id = role.id;
-                                                                        const roles = roleForm.data.roles.includes(id)
-                                                                            ? roleForm.data.roles.filter((r: number) => r !== id)
-                                                                            : [...roleForm.data.roles, id];
-                                                                        roleForm.setData('roles', roles);
-                                                                    }}
-                                                                    className="h-4 w-4 text-green-600 border-slate-300 rounded focus:ring-green-500"
-                                                                />
-                                                                <div className="ml-3">
-                                                                    <span className={`inline-flex items-center px-2.5 py-1 rounded-lg text-xs font-medium border ${getRoleColor(role.name)}`}>
-                                                                        {role.name}
-                                                                    </span>
-                                                                </div>
-                                                            </label>
-                                                        ))}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="bg-slate-50 px-8 py-6 sm:flex sm:flex-row-reverse border-t border-slate-200">
-                                            <button
-                                                type="submit"
-                                                disabled={roleForm.processing}
-                                                className="w-full inline-flex justify-center items-center rounded-xl border border-transparent shadow-sm px-6 py-3 bg-gradient-to-r from-green-500 to-green-600 text-base font-medium text-white hover:from-green-600 hover:to-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:ml-3 sm:w-auto disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
-                                            >
-                                                {roleForm.processing ? (
-                                                    <>
-                                                        <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-                                                        Updating...
-                                                    </>
-                                                ) : (
-                                                    <>
-                                                        <svg className="mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                                                        </svg>
-                                                        Update Roles
-                                                    </>
-                                                )}
-                                            </button>
-                                            <button
-                                                type="button"
-                                                onClick={() => setEditingMenuRoles(null)}
-                                                className="mt-3 w-full inline-flex justify-center rounded-xl border border-slate-300 shadow-sm px-6 py-3 bg-white text-base font-medium text-slate-700 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:ml-3 sm:w-auto transition-all duration-200"
-                                            >
-                                                Cancel
-                                            </button>
-                                        </div>
-                                    </form>
-                                </div>
                             </div>
                         </div>
                     )}
