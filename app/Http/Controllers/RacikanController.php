@@ -11,6 +11,18 @@ use Inertia\Inertia;
 
 class RacikanController extends Controller
 {
+    public function index($no_rm)
+    {
+        $racikans = Racikan::with([
+            'obat.harga_baru' // relasi ke harga terbaru
+        ])->where('no_rm', $no_rm)
+            ->get();
+
+        return Inertia::render('Admin/Racikan/Index', [
+            'racikans' => $racikans
+        ]);
+    }
+
     // Controller
     public function create($no_rm)
     {

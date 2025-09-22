@@ -2,7 +2,6 @@ import { useState } from "react";
 import {
     Bell,
     Menu,
-    X,
     Activity,
     Settings,
     LogOut,
@@ -21,11 +20,14 @@ interface Notification {
     time: string;
 }
 
-interface AdminNavbarProps {
-    currentUser: User;
-}
+export default function AdminNavbar() {
+    const [currentUser] = useState<User>({
+        name: "Dr. Sarah Wijaya",
+        role: "Dokter Poli Paru",
+        avatar:
+            "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=150&h=150&fit=crop&crop=face",
+    });
 
-export default function AdminNavbar({ currentUser }: AdminNavbarProps) {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
     const [notifications] = useState<Notification[]>([
@@ -58,7 +60,7 @@ export default function AdminNavbar({ currentUser }: AdminNavbarProps) {
                             </div>
                         </div>
 
-                        {/* Right Side: Search, Notification, Profile */}
+                        {/* Right Side: Notification, Profile */}
                         <div className="flex items-center space-x-4">
                             {/* Notifications */}
                             <div className="relative">
@@ -78,6 +80,7 @@ export default function AdminNavbar({ currentUser }: AdminNavbarProps) {
                                 >
                                     <img
                                         src={currentUser.avatar}
+                                        alt={currentUser.name}
                                         className="w-9 h-9 rounded-full object-cover"
                                     />
                                 </button>

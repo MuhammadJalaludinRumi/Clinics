@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Menu extends Model
 {
-    protected $fillable = ['name', 'route'];
+    protected $fillable = ['title', 'url', 'icon'];
 
     public function roles()
     {
